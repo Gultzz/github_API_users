@@ -6,13 +6,16 @@ addEventListener('keyup',(event)=>{
 });
 async function pesquisar(){
     var valor = document.getElementById("input").value;
-    var url = await `https://api.github.com/users/${valor}`;
+    var url = await `https://api.github.com/users/${valor.trim()}`;
+    console.log(url);
     // var link = fetch(url).then(response => console.log(response.json()));
     var link =  await fetch(url).then(response => response.json()).then(link);
     
-
     var img = document.querySelector('.img');
     img.src = link.avatar_url;
+    if(img.src == undefined){
+        img.src = 'image/user.jpg';
+    }
 
     var name = document.querySelector('.name');
     name.innerHTML = link.login;
@@ -34,4 +37,14 @@ async function pesquisar(){
     linkUser.innerText = apareceL.toLowerCase();
     linkUser.href = apareceL;
     linkUser.target = "_blank";
+    if(img.src == undefined || img.src === null || img.value == undefined){
+        console.log("Entrou no if");
+        img.src = 'image/user.jpg';
+        name.innerHTML = "Invalid user";
+        bio.innerHTML = "Enter a valid user so you can see information about them";
+        repos.innerHTML = "Repositories: " + 0;
+        fol.innerHTML = "Followers: " + 0;
+        linkUser.innerHTML = "https://github.com/InvalidUser";
+        linkUser.href = "https://github.com/InvalidUser";
+        }
 }
