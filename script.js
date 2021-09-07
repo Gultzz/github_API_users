@@ -1,3 +1,4 @@
+window.onload = piscar;
 addEventListener('keyup',(event)=>{
     var key = event.which || event.keyCode;
     if(key == 13){
@@ -13,15 +14,13 @@ async function pesquisar(){
     
     var img = document.querySelector('.img');
     img.src = link.avatar_url;
-    if(img.src == undefined){
-        img.src = 'image/user.jpg';
-    }
 
     var name = document.querySelector('.name');
     name.innerHTML = link.login;
+    
 
     var bio = document.querySelector('.bio');
-    bio.innerHTML = link.bio;
+    bio.innerHTML = "Biografia: "+link.bio;
     if(bio.innerHTML == ""){
         bio.innerHTML = "There's nothing written in " + link.login + "'s biography";
     }
@@ -37,8 +36,7 @@ async function pesquisar(){
     linkUser.innerText = apareceL.toLowerCase();
     linkUser.href = apareceL;
     linkUser.target = "_blank";
-    if(img.src == undefined || img.src === null || img.value == undefined){
-        console.log("Entrou no if");
+    if(img.src == undefined || img.src == "undefined"){
         img.src = 'image/user.jpg';
         name.innerHTML = "Invalid user";
         bio.innerHTML = "Enter a valid user so you can see information about them";
@@ -47,4 +45,16 @@ async function pesquisar(){
         linkUser.innerHTML = "https://github.com/InvalidUser";
         linkUser.href = "https://github.com/InvalidUser";
         }
+}
+
+function piscar(){
+    setTimeout(()=>{
+        var inputs = document.getElementById("input");
+        if(inputs.placeholder == "Github username_"){
+            inputs.placeholder = "Github username";
+        }else{
+            inputs.placeholder = "Github username_";
+        }
+        piscar();
+    },500);
 }
